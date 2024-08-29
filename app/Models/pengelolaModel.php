@@ -3,33 +3,41 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class UserModel extends Authenticatable implements JWTSubject
+class pengelolaModel extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
-    protected $table = 'User';
+    protected $table = 'pengelola';
+
     public $timestamps = false;
+
     public $incrementing = false;
-    protected $primaryKey = 'id_user'; // id_user is a primary key (NEEDED TO MAKE SURE THE JWT IS IDENTIFIYING THE TABLE)
-    protected $keyType = 'string'; // id_user is a string (varchar)
+
+    protected $primaryKey = 'id_pengelola';
+
+    protected $keyType = 'string'; // id_pengelola is a string (varchar)
     protected $fillable = [
-        'id_user',
+        'id_pengelola',
         'name',
         'username',
         'email',
         'password',
+        'role'
     ];
 
     protected $hidden = [
         'password',
+        'remember_token',
     ];
+
+
     protected function casts(): array
     {
         return [
+            // 'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

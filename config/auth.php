@@ -13,11 +13,6 @@ return [
     |
     */
 
-    'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -35,10 +30,31 @@ return [
     |
     */
 
+    'defaults' => [
+        'guard' => 'api',
+        'passwords' => 'users',
+    ],
+
+
     'guards' => [
         'web' => [
             'driver' => 'session',
+            'provider' => 'user_model',
+        ],
+
+        'api' => [
+            'driver' => 'jwt',
             'provider' => 'users',
+        ],
+
+        'user_model' => [
+            'driver' => 'jwt',
+            'provider' => 'user_model',
+        ],
+
+        'pengelola_model' => [
+            'driver' => 'jwt',
+            'provider' => 'pengelola_model',
         ],
     ],
 
@@ -63,6 +79,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        'user_model' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\UserModel::class,
+        ],
+
+        'pengelola_model' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\pengelolaModel::class,
         ],
 
         // 'users' => [
