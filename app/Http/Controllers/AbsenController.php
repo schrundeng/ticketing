@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\absenModel;
 
-class absenController extends Controller
+class AbsenController extends Controller
 {
     public function tesAbsen(Request $request){
         $request->validate([
