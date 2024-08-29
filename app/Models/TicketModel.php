@@ -4,28 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class TicketModel extends Model
 {
     use HasFactory;
-    protected $table = 'ticket', $primaryKey = 'id_ticket', $fillable = [
-        'id_user',
-        'id_pengelola',
-        'description',
-        'id_category',
-        'date_created',
-        'status',
-        'status_note'
+    protected $table = 'ticket';
+    public $timestamps = true;
+    public $incrementing = false;
+    protected $primaryKey = 'id_ticket'; //uuid
+    protected $keyType = 'uuid';
+
+    protected $fillable = [         
+        'id_user', // uuid
+        'id_pengelola', // varchar
+        'description', // text
+        'id_category', // uuid
+        'date_created', // timestamp
+        'status', // int4
+        'status_note', // varchar
+        'created_at', // date
+        'updated_at' // date
     ];
-    public $timestamp = false, $incrementing = false;
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($model) {
-            if (empty($model->id_ticket)) {
-                $model->id_ticket = Str::uuid();
-            }
-        });
-    }
 }
