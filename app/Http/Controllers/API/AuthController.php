@@ -20,7 +20,7 @@ class AuthController extends Controller
     public function loginUser(Request $request)
     {
         // Get the name and password from the request
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('id_user', 'password');
 
         try {
             // Attempt to authenticate the user using the default guard
@@ -42,14 +42,14 @@ class AuthController extends Controller
     public function loginPengelola(Request $request)
     {
         // Get the name and password from the request
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('id_pengelola', 'password');
 
         // Delete any previous login records based on id_pengelola
-        $absenDelete = absenModel::where('id_pengelola', $credentials['username'])->delete();
+        $absenDelete = absenModel::where('id_pengelola', $credentials['id_pengelola'])->delete();
 
         // Make a new login record consisted of id_pengelola, login_date, and status. Status 1 means logged in.
         $absenCreate = absenModel::create([
-            'id_pengelola' => $credentials['username'],
+            'id_pengelola' => $credentials['id_pengelola'],
             'login_date' => now(),
             'status' => 1,
         ]);
@@ -186,7 +186,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function registerOperator(Request $request)
+    public function registerPengelola(Request $request)
     {
         // Validate data to make sure it's correctly inputted
         $request->validate([

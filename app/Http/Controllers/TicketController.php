@@ -52,7 +52,7 @@ class TicketController extends Controller
             'status' => 0
         ]);
         if ($save) {
-            return response()->json(['status' => true, 'message' => 'Succesfully made new ticket']);
+            return response()->json(['status' => true, 'message' => 'Successfully made new ticket']);
         } else {
             return response()->json(['status' => false, 'message' => 'Failed to make ticket']);
         }
@@ -71,23 +71,28 @@ class TicketController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson());
         }
-        $update = TicketModel::where('id_ticket', $id_ticket)->update([
+        $ticket = TicketModel::find($id_ticket);
+
+        if (!$ticket) {
+            return response()->json(['status' => false, 'message' => 'Ticket not found']);
+        }
+        $ticket = TicketModel::where('id_ticket', $id_ticket)->update([
             'id_user' => $req->get('id_user'), //(harusnya fetch dari login user)
             'id_pengelola' => $req->get('id_pengelola'), //(harusnya fetch dari login pengelola)
             'description' => $req->get('description'),
             'id_category' => $req->get('id_category'),
             'status' => $req->get('status'),
         ]);
-        if ($update) {
-            return response()->json(['status' => true, 'message' => 'Succesfully updated ticket']);
+        if ($ticket) {
+            return response()->json(['status' => true, 'message' => 'Successfully updated ticket']);
         } else {
-            return response()->json(['status' => false, 'message' => 'Failed to edit ticket']);
+            return response()->json(['status' => false, 'message' => 'Failed to update ticket']);
         }
     }
 
     public function deleteTicket($id_ticket)
     {
-        $delete = TicketModel::where('$id_ticket', $id_ticket)->delete();
+        $delete = TicketModel::where('id_ticket', $id_ticket)->delete();
         if ($delete) {
             return response()->json(['status' => true, 'massage' => 'Ticket deleted']);
         } else {

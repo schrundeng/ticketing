@@ -36,15 +36,13 @@ class CategoryController extends Controller
     public function addCategory(request $req)
     {
         $validator = validator::make($req->all(), [
-            'name' => 'required',
-            'color' => 'required',
+            'name' => 'required'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson());
         }
         $save = CategoryModel::create([
-            'name' => $req->get('name'),
-            'color' => $req->get('color'),
+            'name' => $req->get('name')
         ]);
         if ($save) {
             return response()->json(['status' => true, 'message' => 'Succesfully made new category']);
@@ -56,16 +54,14 @@ class CategoryController extends Controller
     public function updateCategory(Request $req, $id_category)
     {
         $validator = validator::make($req->all(), [
-            'name' => 'required',
-            'color' => 'required'
+            'name' => 'required'
 
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson());
         }
         $update = CategoryModel::where('id_category', $id_category)->update([
-            'name' => $req->get('name'),
-            'color' => $req->get('color'),
+            'name' => $req->get('name')
         ]);
         if ($update) {
             return response()->json(['status' => true, 'message' => 'Succesfully updated category']);
