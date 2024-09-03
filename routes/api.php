@@ -14,11 +14,13 @@ use App\Http\Controllers\absenController;
 Route::middleware('auth:user_model')->group(function () {
     Route::get('/getTicket', [TicketController::class, 'getTicket']);
     Route::get('/getTicketId', [TicketController::class, 'getTicketId']);
+    Route::delete('ticket/deleteTicketUser/{id}', [TicketController::class, 'deleteTicket']);
     Route::post('/addTicket', [TicketController::class, 'addTicket']);
 });
 
 //enpoint api untuk operator/pengelola
 Route::middleware('auth:pengelola_model')->group(function () {
+    Route::delete('ticket/deleteTicketPengelola/{id}', [TicketController::class, 'deleteTicket']);
     Route::get('/getTicket', [TicketController::class, 'getTicket']);
     Route::get('/getTicketId', [TicketController::class, 'getTicketId']);
     Route::post('/addTicket', [TicketController::class, 'addTicket']);
